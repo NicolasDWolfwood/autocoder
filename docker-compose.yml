@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   autocoder:
@@ -13,11 +13,11 @@ services:
     volumes:
       # CRITICAL: Project registry database and Claude settings
       # Contains: ~/.autocoder/registry.db (project mappings)
-      - ./config:/config
+      - /mnt/user/appdata/autocoder/config:/config
 
       # CRITICAL: All your generated application code
       # Contains: features.db, prompts/, source code for each project
-      - ./data/projects:/data/projects
+      - /mnt/user/appdata/autocoder/data/projects:/data/projects
 
       # Optional: mount MCP servers directory if you have custom ones
       # - ./mcp_server:/app/mcp_server

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>AutoCoder</Name>
-  <Repository>yourusername/autocoder:latest</Repository>
-  <Registry>https://hub.docker.com/r/yourusername/autocoder</Registry>
+  <Repository>johnreijmer/autocoder:latest</Repository>
+  <Registry>https://hub.docker.com/r/johnreijmer/autocoder</Registry>
   <Network>bridge</Network>
   <MyIP/>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/yourusername/autocoder/issues</Support>
-  <Project>https://github.com/yourusername/autocoder</Project>
+  <Support>https://github.com/johnreijmer/autocoder/issues</Support>
+  <Project>https://github.com/johnreijmer/autocoder</Project>
   <Overview>
     AutoCoder is a long-running autonomous coding agent powered by the Claude Agent SDK.
     Build complete applications over multiple sessions with a React-based UI for monitoring progress in real-time.
@@ -26,14 +26,14 @@
   </Overview>
   <Category>Productivity: Tools: Status:Stable</Category>
   <WebUI>http://[IP]:[PORT:8888]</WebUI>
-  <TemplateURL>https://raw.githubusercontent.com/yourusername/autocoder/main/unraid-template.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/yourusername/autocoder/main/ui/public/icon.png</Icon>
+  <TemplateURL>https://raw.githubusercontent.com/johnreijmer/autocoder/main/unraid-template.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/johnreijmer/autocoder/main/ui/public/icon.png</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
   <DateInstalled/>
   <DonateText>Support Development</DonateText>
-  <DonateLink>https://www.buymeacoffee.com/yourusername</DonateLink>
+  <DonateLink>https://www.buymeacoffee.com/johnreijmer</DonateLink>
   <Requires/>
   <Config Name="Web UI Port" Target="8888" Default="8888" Mode="tcp" Description="Port for accessing the web interface" Type="Port" Display="always" Required="true" Mask="false">8888</Config>
   <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/autocoder/config" Mode="rw" Description="Stores Claude Code settings, credentials, and project registry database" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/autocoder/config</Config>
