@@ -186,7 +186,7 @@ def is_unc_path(path_str: str) -> bool:
 
 @router.get("/list", response_model=DirectoryListResponse)
 async def list_directory(
-    path: str | None = Query(None, description="Directory path to list (defaults to home)"),
+    path: str | None = Query(None, description="Directory path to list (defaults to projects dir or home)"),
     show_hidden: bool = Query(False, description="Include hidden files"),
 ):
     """
@@ -195,9 +195,14 @@ async def list_directory(
     Returns directories only (for folder selection).
     On Windows, includes available drives.
     """
-    # Default to home directory
+    # Default to projects directory (Docker) or home directory (local)
     if path is None or path == "":
-        target = Path.home()
+        # In Docker mode, default to /data/projects for better UX
+        default_projects_dir = os.getenv("DEFAULT_PROJECTS_DIR")
+        if default_projects_dir:
+            target = Path(default_projects_dir)
+        else:
+            target = Path.home()
     else:
         # Security: Block UNC paths
         if is_unc_path(path):

@@ -1,0 +1,45 @@
+# Docker Compose example using published Docker Hub image
+# Use this after you've published your image to Docker Hub
+#
+# Usage:
+#   1. Copy this file to docker-compose.yml
+#   2. Update 'yourusername' with your Docker Hub username
+#   3. Create .env file with ANTHROPIC_API_KEY
+#   4. Run: docker-compose up -d
+
+version: '3.8'
+
+services:
+  autocoder:
+    # Pull from Docker Hub instead of building locally
+    image: yourusername/autocoder:latest
+
+    container_name: autocoder
+    restart: unless-stopped
+
+    ports:
+      - "8888:8888"
+
+    volumes:
+      # Persist Claude Code settings and credentials
+      - ./config:/config
+      # Persist generated projects
+      - ./data/projects:/data/projects
+
+    environment:
+      # Required: Your Anthropic API key
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # Enable Docker mode to allow external connections
+      - DOCKER_MODE=true
+      # Optional: Run browser automation in headless mode (recommended for servers)
+      - PLAYWRIGHT_HEADLESS=true
+      # Optional: Base URL for custom Claude endpoints (GLM mode)
+      # - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}
+      # - ANTHROPIC_AUTH_TOKEN=${ANTHROPIC_AUTH_TOKEN}
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s

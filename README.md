@@ -4,6 +4,28 @@
 
 A long-running autonomous coding agent powered by the Claude Agent SDK. This tool can build complete applications over multiple sessions using a two-agent pattern (initializer + coding agent). Includes a React-based UI for monitoring progress in real-time.
 
+## 🐳 Docker Deployment
+
+AutoCoder can be deployed as a Docker container for easy setup on Unraid, NAS, or any Docker-compatible system:
+
+```bash
+docker run -d \
+  --name autocoder \
+  -p 8888:8888 \
+  -v ./config:/config \
+  -v ./data/projects:/data/projects \
+  -e ANTHROPIC_API_KEY=sk-ant-your-key-here \
+  johnreijmer/autocoder:latest
+```
+
+**See [README-DOCKER.md](README-DOCKER.md) for complete Docker deployment guide including:**
+- Docker Compose setup
+- Unraid installation
+- Volume persistence
+- Environment variables
+
+---
+
 ## Video Tutorial
 
 [![Watch the tutorial](https://img.youtube.com/vi/lGWFlpffWk4/hqdefault.jpg)](https://youtu.be/lGWFlpffWk4)
@@ -51,11 +73,13 @@ start_ui.bat
 ./start_ui.sh
 ```
 
-This launches the React-based web UI at `http://localhost:5173` with:
+This launches the React-based web UI with:
 - Project selection and creation
 - Kanban board view of features
 - Real-time agent output streaming
 - Start/pause/stop controls
+
+**Note:** The UI runs on port **8888** in production mode (pre-built React app served by FastAPI). If running in development mode with `--dev` flag, it uses port **5173** (Vite dev server with hot reload).
 
 ### Option 2: CLI Mode
 

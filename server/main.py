@@ -72,15 +72,18 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS - allow only localhost origins for security
+# CORS - allow localhost origins for security, or all origins in Docker mode
+docker_mode = os.getenv("DOCKER_MODE", "false").lower() == "true"
+allowed_origins = ["*"] if docker_mode else [
+    "http://localhost:5173",      # Vite dev server
+    "http://127.0.0.1:5173",
+    "http://localhost:8888",      # Production
+    "http://127.0.0.1:8888",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",      # Vite dev server
-        "http://127.0.0.1:5173",
-        "http://localhost:8888",      # Production
-        "http://127.0.0.1:8888",
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -93,12 +96,15 @@ app.add_middleware(
 
 @app.middleware("http")
 async def require_localhost(request: Request, call_next):
-    """Only allow requests from localhost."""
-    client_host = request.client.host if request.client else None
+    """Only allow requests from localhost (or any host if DOCKER_MODE is set)."""
+    # In Docker/production mode, allow all hosts for Unraid/container deployment
+    docker_mode = os.getenv("DOCKER_MODE", "false").lower() == "true"
 
-    # Allow localhost connections
-    if client_host not in ("127.0.0.1", "::1", "localhost", None):
-        raise HTTPException(status_code=403, detail="Localhost access only")
+    if not docker_mode:
+        client_host = request.client.host if request.client else None
+        # Allow localhost connections only in non-docker mode
+        if client_host not in ("127.0.0.1", "::1", "localhost", None):
+            raise HTTPException(status_code=403, detail="Localhost access only")
 
     return await call_next(request)
 

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  autocoder:
+    build: .
+    image: autocoder:latest
+    container_name: autocoder
+    restart: unless-stopped
+
+    ports:
+      - "8888:8888"
+
+    volumes:
+      # CRITICAL: Project registry database and Claude settings
+      # Contains: ~/.autocoder/registry.db (project mappings)
+      - ./config:/config
+
+      # CRITICAL: All your generated application code
+      # Contains: features.db, prompts/, source code for each project
+      - ./data/projects:/data/projects
+
+      # Optional: mount MCP servers directory if you have custom ones
+      # - ./mcp_server:/app/mcp_server
+
+    environment:
+      # Required: Your Anthropic API key
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # Enable Docker mode to allow external connections
+      - DOCKER_MODE=true
+      # Default directory for new projects (auto-set in Dockerfile)
+      - DEFAULT_PROJECTS_DIR=/data/projects
+      # Optional: Base URL for custom Claude endpoints (GLM mode)
+      # - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}
+      # - ANTHROPIC_AUTH_TOKEN=${ANTHROPIC_AUTH_TOKEN}
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s

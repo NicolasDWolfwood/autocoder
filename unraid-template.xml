@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>AutoCoder</Name>
+  <Repository>yourusername/autocoder:latest</Repository>
+  <Registry>https://hub.docker.com/r/yourusername/autocoder</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/yourusername/autocoder/issues</Support>
+  <Project>https://github.com/yourusername/autocoder</Project>
+  <Overview>
+    AutoCoder is a long-running autonomous coding agent powered by the Claude Agent SDK.
+    Build complete applications over multiple sessions with a React-based UI for monitoring progress in real-time.
+
+    Features:
+    - Two-agent pattern (initializer + coding agent)
+    - Real-time progress tracking with Kanban board
+    - Automatic session continuation
+    - Feature dependency management
+    - Regression testing
+    - Beautiful React UI with neobrutalism design
+
+    Requirements:
+    - Anthropic API key from console.anthropic.com
+  </Overview>
+  <Category>Productivity: Tools: Status:Stable</Category>
+  <WebUI>http://[IP]:[PORT:8888]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/yourusername/autocoder/main/unraid-template.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/yourusername/autocoder/main/ui/public/icon.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText>Support Development</DonateText>
+  <DonateLink>https://www.buymeacoffee.com/yourusername</DonateLink>
+  <Requires/>
+  <Config Name="Web UI Port" Target="8888" Default="8888" Mode="tcp" Description="Port for accessing the web interface" Type="Port" Display="always" Required="true" Mask="false">8888</Config>
+  <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/autocoder/config" Mode="rw" Description="Stores Claude Code settings, credentials, and project registry database" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/autocoder/config</Config>
+  <Config Name="Projects Directory" Target="/data/projects" Default="/mnt/user/appdata/autocoder/projects" Mode="rw" Description="Stores generated application projects" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/autocoder/projects</Config>
+  <Config Name="Anthropic API Key" Target="ANTHROPIC_API_KEY" Default="" Mode="" Description="Your Anthropic API key from console.anthropic.com (Required). No 'claude login' needed!" Type="Variable" Display="always" Required="true" Mask="true">sk-ant-your-key-here</Config>
+  <Config Name="Docker Mode" Target="DOCKER_MODE" Default="true" Mode="" Description="Enables external network access (should always be true)" Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="Playwright Headless" Target="PLAYWRIGHT_HEADLESS" Default="true" Mode="" Description="Run browser automation in headless mode (true = invisible, false = visible browser window)" Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="Custom API Base URL" Target="ANTHROPIC_BASE_URL" Default="" Mode="" Description="Optional: Custom API endpoint for GLM mode or alternative providers" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Custom Auth Token" Target="ANTHROPIC_AUTH_TOKEN" Default="" Mode="" Description="Optional: Authentication token for custom API endpoint" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+</Container>
