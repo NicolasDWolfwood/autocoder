@@ -43,4 +43,9 @@
   <Config Name="Playwright Headless" Target="PLAYWRIGHT_HEADLESS" Default="true" Mode="" Description="Run browser automation in headless mode (true = invisible, false = visible browser window)" Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
   <Config Name="Custom API Base URL" Target="ANTHROPIC_BASE_URL" Default="" Mode="" Description="Optional: Custom API endpoint for GLM mode or alternative providers" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Custom Auth Token" Target="ANTHROPIC_AUTH_TOKEN" Default="" Mode="" Description="Optional: Authentication token for custom API endpoint" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="N8N Webhook URL" Target="PROGRESS_N8N_WEBHOOK_URL" Default="" Mode="" Description="Optional: N8N webhook URL for progress notifications" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="API Timeout (ms)" Target="API_TIMEOUT_MS" Default="120000" Mode="" Description="Optional: API timeout in milliseconds (default: 120000)" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Sonnet Model Override" Target="ANTHROPIC_DEFAULT_SONNET_MODEL" Default="" Mode="" Description="Optional: Custom model for Sonnet (e.g., glm-4.7 for GLM mode)" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Opus Model Override" Target="ANTHROPIC_DEFAULT_OPUS_MODEL" Default="" Mode="" Description="Optional: Custom model for Opus (e.g., glm-4.7 for GLM mode)" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Haiku Model Override" Target="ANTHROPIC_DEFAULT_HAIKU_MODEL" Default="" Mode="" Description="Optional: Custom model for Haiku (e.g., glm-4.5-air for GLM mode)" Type="Variable" Display="advanced" Required="false" Mask="false"/>
 </Container>

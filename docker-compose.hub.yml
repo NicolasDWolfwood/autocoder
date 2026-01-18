@@ -36,6 +36,14 @@ services:
       # Optional: Base URL for custom Claude endpoints (GLM mode)
       # - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}
       # - ANTHROPIC_AUTH_TOKEN=${ANTHROPIC_AUTH_TOKEN}
+      # Optional: N8N webhook for progress notifications
+      # - PROGRESS_N8N_WEBHOOK_URL=${PROGRESS_N8N_WEBHOOK_URL}
+      # Optional: API timeout in milliseconds (default: 120000)
+      # - API_TIMEOUT_MS=${API_TIMEOUT_MS}
+      # Optional: Custom model overrides for GLM or alternative providers
+      # - ANTHROPIC_DEFAULT_SONNET_MODEL=${ANTHROPIC_DEFAULT_SONNET_MODEL}
+      # - ANTHROPIC_DEFAULT_OPUS_MODEL=${ANTHROPIC_DEFAULT_OPUS_MODEL}
+      # - ANTHROPIC_DEFAULT_HAIKU_MODEL=${ANTHROPIC_DEFAULT_HAIKU_MODEL}
 
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api/health"]
