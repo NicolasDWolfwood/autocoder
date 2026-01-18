@@ -153,64 +153,141 @@ Features are stored in SQLite via SQLAlchemy and managed through an MCP server t
 
 ## Project Structure
 
+### Repository Structure
+
 ```
-autonomous-coding/
-├── start.bat                 # Windows CLI start script
-├── start.sh                  # macOS/Linux CLI start script
-├── start_ui.bat              # Windows Web UI start script
-├── start_ui.sh               # macOS/Linux Web UI start script
-├── start.py                  # CLI menu and project management
-├── start_ui.py               # Web UI backend (FastAPI server launcher)
-├── autonomous_agent_demo.py  # Agent entry point
-├── agent.py                  # Agent session logic
-├── client.py                 # Claude SDK client configuration
-├── security.py               # Bash command allowlist and validation
-├── progress.py               # Progress tracking utilities
-├── prompts.py                # Prompt loading utilities
-├── api/
-│   └── database.py           # SQLAlchemy models (Feature table)
-├── mcp_server/
-│   └── feature_mcp.py        # MCP server for feature management tools
-├── server/
-│   ├── main.py               # FastAPI REST API server
-│   ├── websocket.py          # WebSocket handler for real-time updates
-│   ├── schemas.py            # Pydantic schemas
-│   ├── routers/              # API route handlers
-│   └── services/             # Business logic services
-├── ui/                       # React frontend
-│   ├── src/
-│   │   ├── App.tsx           # Main app component
-│   │   ├── hooks/            # React Query and WebSocket hooks
-│   │   └── lib/              # API client and types
-│   ├── package.json
-│   └── vite.config.ts
-├── .claude/
-│   ├── commands/
-│   │   └── create-spec.md    # /create-spec slash command
-│   ├── skills/               # Claude Code skills
-│   └── templates/            # Prompt templates
-├── generations/              # Generated projects go here
-├── requirements.txt          # Python dependencies
-└── .env                      # Optional configuration (N8N webhook)
+autocoder/
+├── 🚀 Launcher Scripts
+│   ├── start.bat                   # Windows CLI launcher
+│   ├── start.sh                    # macOS/Linux CLI launcher
+│   ├── start_ui.bat                # Windows Web UI launcher
+│   └── start_ui.sh                 # macOS/Linux Web UI launcher
+│
+├── 🐳 Docker Files
+│   ├── Dockerfile                  # Multi-stage Docker build
+│   ├── docker-compose.yml          # Local Docker Compose setup
+│   ├── docker-compose.hub.yml      # Docker Hub image example
+│   ├── docker-build-push.sh        # Build & push script (multi-arch)
+│   ├── docker-build-push.bat       # Build & push script (Windows)
+│   ├── .dockerignore               # Docker build exclusions
+│   └── unraid-template.xml         # Unraid Community Apps template
+│
+├── 📚 Documentation
+│   ├── README.md                   # This file
+│   ├── README-DOCKER.md            # Docker deployment guide
+│   ├── DOCKER-HUB.md               # Publishing to Docker Hub
+│   ├── DOCKER-VOLUMES.md           # Volume persistence guide
+│   ├── PORT-REFERENCE.md           # Port configuration reference
+│   └── CLAUDE.md                   # Architecture and patterns
+│
+├── 🐍 Python Backend
+│   ├── start.py                    # CLI menu system
+│   ├── start_ui.py                 # Web UI launcher (FastAPI)
+│   ├── autonomous_agent_demo.py    # Agent entry point
+│   ├── agent.py                    # Agent session loop
+│   ├── client.py                   # Claude SDK client with security
+│   ├── security.py                 # Bash command allowlist
+│   ├── progress.py                 # Progress tracking & webhooks
+│   ├── prompts.py                  # Prompt template loading
+│   ├── registry.py                 # Project registry (SQLite)
+│   ├── parallel_orchestrator.py    # Multi-agent coordination
+│   └── requirements.txt            # Python dependencies
+│
+├── 🗄️ Database & API
+│   └── api/
+│       ├── database.py             # SQLAlchemy models (Feature)
+│       └── dependency_resolver.py  # Dependency graph validation
+│
+├── 🔌 MCP Server
+│   └── mcp_server/
+│       └── feature_mcp.py          # Feature management MCP tools
+│
+├── 🌐 FastAPI Server
+│   └── server/
+│       ├── main.py                 # FastAPI app & static file serving
+│       ├── websocket.py            # Real-time WebSocket handler
+│       ├── schemas.py              # Pydantic models
+│       ├── routers/                # API endpoints
+│       │   ├── projects.py         # Project CRUD
+│       │   ├── features.py         # Feature management
+│       │   ├── agent.py            # Agent control
+│       │   ├── filesystem.py       # Folder browser
+│       │   ├── spec_creation.py   # Interactive spec creation
+│       │   └── ...
+│       └── services/               # Business logic
+│           ├── process_manager.py  # Agent subprocess management
+│           ├── dev_server_manager.py # Dev server lifecycle
+│           └── ...
+│
+├── ⚛️ React Frontend
+│   └── ui/
+│       ├── src/
+│       │   ├── App.tsx             # Main app component
+│       │   ├── components/         # UI components
+│       │   │   ├── ProjectSelector.tsx
+│       │   │   ├── KanbanBoard.tsx
+│       │   │   ├── DependencyGraph.tsx
+│       │   │   ├── AgentMissionControl.tsx
+│       │   │   └── ...
+│       │   ├── hooks/              # React Query & WebSocket
+│       │   ├── lib/                # API client & types
+│       │   └── styles/             # Tailwind CSS v4 config
+│       ├── package.json
+│       ├── vite.config.ts
+│       └── dist/                   # Built production files (served by FastAPI)
+│
+├── 🎨 Claude Code Configuration
+│   └── .claude/
+│       ├── commands/
+│       │   ├── create-spec.md      # /create-spec command
+│       │   └── expand-project.md   # /expand-project command
+│       ├── skills/
+│       │   └── frontend-design/    # Distinctive UI design skill
+│       └── templates/              # Prompt templates
+│           ├── initializer_prompt.template.md
+│           └── coding_prompt.template.md
+│
+└── 📁 Runtime Data (not in repo)
+    ├── config/                     # Docker: /config volume
+    │   └── .autocoder/
+    │       └── registry.db         # Project registry database
+    ├── data/projects/              # Docker: /data/projects volume
+    │   └── my-app/                 # Your generated projects
+    │       ├── features.db
+    │       ├── prompts/
+    │       └── src/
+    └── venv/                       # Python virtual environment (local)
 ```
 
 ---
 
 ## Generated Project Structure
 
-After the agent runs, your project directory will contain:
+After the agent runs, each generated project will contain:
 
 ```
-generations/my_project/
-├── features.db               # SQLite database (feature test cases)
+my-app/                       # Your project (in /data/projects in Docker)
+├── features.db               # SQLite database (feature test cases & progress)
 ├── prompts/
-│   ├── app_spec.txt          # Your app specification
-│   ├── initializer_prompt.md # First session prompt
-│   └── coding_prompt.md      # Continuation session prompt
-├── init.sh                   # Environment setup script
-├── claude-progress.txt       # Session progress notes
-└── [application files]       # Generated application code
+│   ├── app_spec.txt          # Your application specification (XML format)
+│   ├── initializer_prompt.md # First session prompt (reads spec, creates features)
+│   └── coding_prompt.md      # Continuation session prompt (implements features)
+├── .autocoder/
+│   └── config.json           # Project-specific configuration (dev server settings)
+├── .agent.lock               # Lock file (prevents multiple agents, auto-removed)
+├── .claude_settings.json     # Security settings (auto-generated per session)
+├── package.json              # Node.js dependencies (if applicable)
+├── src/                      # Your generated application code
+│   ├── App.tsx               # Main component (example for React apps)
+│   ├── components/           # UI components
+│   └── ...                   # Other source files
+├── public/                   # Static assets
+├── README.md                 # Generated project documentation
+└── ...                       # Other files created by the agent
 ```
+
+**Local development:** Projects are stored where you specify (e.g., `d:\my-projects\my-app`)
+**Docker deployment:** Projects are stored in `/data/projects` (mapped to host volume)
 
 ---
 
@@ -218,18 +295,35 @@ generations/my_project/
 
 After the agent completes (or pauses), you can run the generated application:
 
+### Local Development
+
 ```bash
-cd generations/my_project
+# Navigate to your project
+cd /path/to/my-app
 
-# Run the setup script created by the agent
-./init.sh
+# Install dependencies (typically for Node.js apps)
+npm install
 
-# Or manually (typical for Node.js apps):
+# Start the development server
+npm run dev
+```
+
+### Docker Deployment
+
+```bash
+# Access your project files on the host
+cd /mnt/user/appdata/autocoder/projects/my-app  # Unraid
+# or
+cd d:\testdocker\data\projects\my-app           # Windows Docker
+
+# Install and run (same as local)
 npm install
 npm run dev
 ```
 
 The application will typically be available at `http://localhost:3000` or similar.
+
+**Note:** The AutoCoder UI includes a built-in dev server launcher that can start your app's dev server directly from the web interface!
 
 ---
 
@@ -347,6 +441,8 @@ Edit `security.py` to add or remove commands from `ALLOWED_COMMANDS`.
 
 ## Troubleshooting
 
+### Local Development Issues
+
 **"Claude CLI not found"**
 Install the Claude Code CLI using the instructions in the Prerequisites section.
 
@@ -358,6 +454,55 @@ This is normal. The initializer agent is generating detailed test cases, which t
 
 **"Command blocked by security hook"**
 The agent tried to run a command not in the allowlist. This is the security system working as intended. If needed, add the command to `ALLOWED_COMMANDS` in `security.py`.
+
+### Docker Deployment Issues
+
+**"Projects created in /config instead of /data/projects"**
+This was a bug in versions prior to 0.0.2. Update to the latest image: `docker pull johnreijmer/autocoder:latest`
+
+**"Can't access UI from other devices"**
+1. Verify `DOCKER_MODE=true` is set
+2. Check firewall rules on your server
+3. Ensure port 8888 is properly mapped
+
+**"Container won't start"**
+Check logs: `docker logs autocoder` or `docker-compose logs`
+
+**For more Docker troubleshooting, see [README-DOCKER.md](README-DOCKER.md#troubleshooting)**
+
+---
+
+## Quick Reference
+
+### Deployment Comparison
+
+| Feature | Local Development | Docker (Unraid/NAS) |
+|---------|------------------|---------------------|
+| **Installation** | Clone repo, run `start_ui.bat` | `docker pull johnreijmer/autocoder:latest` |
+| **Authentication** | `claude login` or API key | API key via environment variable |
+| **UI Port** | 8888 (production) or 5173 (dev) | 8888 |
+| **Project Storage** | Anywhere on your system | `/data/projects` (mapped to host) |
+| **Config Storage** | `~/.autocoder/` | `/config` (mapped to host) |
+| **Access** | `http://localhost:8888` | `http://your-server-ip:8888` |
+| **Updates** | `git pull` | `docker pull` + restart |
+| **Best For** | Active development, testing | Always-on server, team access |
+
+### Key Paths
+
+| Context | Projects Location | Registry Database | Docker Volume |
+|---------|------------------|-------------------|---------------|
+| **Local Windows** | User-specified | `C:\Users\YourName\.autocoder\registry.db` | N/A |
+| **Local Linux/Mac** | User-specified | `~/.autocoder/registry.db` | N/A |
+| **Docker Container** | `/data/projects` | `/config/.autocoder/registry.db` | Yes |
+| **Unraid Host** | `/mnt/user/appdata/autocoder/projects` | `/mnt/user/appdata/autocoder/config/.autocoder/registry.db` | Mapped |
+
+### Important Links
+
+- 🐳 **Docker Deployment:** [README-DOCKER.md](README-DOCKER.md)
+- 📦 **Docker Hub:** [Publishing Guide](DOCKER-HUB.md)
+- 💾 **Volume Persistence:** [DOCKER-VOLUMES.md](DOCKER-VOLUMES.md)
+- 🔌 **Port Configuration:** [PORT-REFERENCE.md](PORT-REFERENCE.md)
+- 🏗️ **Architecture:** [CLAUDE.md](CLAUDE.md)
 
 ---
 
