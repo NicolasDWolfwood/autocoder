@@ -7,7 +7,7 @@ set -e  # Exit on error
 # Configuration - CHANGE THESE VALUES
 DOCKER_USERNAME="johnreijmer"  # Your Docker Hub username
 IMAGE_NAME="autocoder"          # Image name on Docker Hub
-VERSION="0.0.2"                 # Version tag (update for new releases)
+VERSION="0.0.3"                 # Version tag (update for new releases)
 
 # Derived variables
 FULL_IMAGE="${DOCKER_USERNAME}/${IMAGE_NAME}"

@@ -8,7 +8,7 @@ setlocal
 REM Configuration - CHANGE THESE VALUES
 set DOCKER_USERNAME=johnreijmer
 set IMAGE_NAME=autocoder
-set VERSION=0.0.2
+set VERSION=0.0.3
 
 REM Derived variables
 set FULL_IMAGE=%DOCKER_USERNAME%/%IMAGE_NAME%
